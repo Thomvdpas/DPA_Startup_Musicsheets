@@ -4,9 +4,14 @@ namespace DPA_Musicsheets.Models
 {
     public class RestNote : BaseNote
     {
-        public RestNote(Duration duration) : base(NoteType.Empty, duration)
+        public RestNote(double duration) : base(PitchType.None, NoteType.Empty, duration)
         {
-            Duration = duration;
+
+        }
+
+        public override BaseNote Clone()
+        {
+            return new RestNote(Duration);
         }
     }
 

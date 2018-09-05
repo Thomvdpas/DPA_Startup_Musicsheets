@@ -1,17 +1,28 @@
 ﻿using DPA_Musicsheets.Enums;
-using Duration = DPA_Musicsheets.Enums.Duration;
 
 namespace DPA_Musicsheets.Models
 {
     public abstract class BaseNote
     {
-        protected NoteType NoteType;
-        protected Duration Duration;
+        private double _duration;
 
-        protected BaseNote(NoteType noteType, Duration duration)
+        protected PitchType PitchType;
+        protected NoteType NoteType;
+        protected bool IsPoint;
+
+        protected double Duration
         {
+            get => IsPoint ? _duration * 1.5 : _duration;
+            set => _duration = value;
+        }
+
+        protected BaseNote(PitchType pitchType, NoteType noteType, double duration)
+        {
+            PitchType = pitchType;
             NoteType = noteType;
             Duration = duration;
         }
+
+        public abstract BaseNote Clone();
     }
 }

@@ -103,16 +103,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Enums\Duration.cs" />
     <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\PitchType.cs" />
     <Compile Include="Managers\MidiToLilyHelper.cs" />
     <Compile Include="Managers\MusicLoader.cs" />
+    <Compile Include="Models\Composition.cs" />
     <Compile Include="Models\LilypondToken.cs" />
     <Compile Include="Models\LilypondTokenKind.cs" />
     <Compile Include="Models\BaseNote.cs" />
     <Compile Include="Models\MusicNote.cs" />
+    <Compile Include="Models\Piece.cs" />
+    <Compile Include="Models\Repetition.cs" />
     <Compile Include="Models\RestNote.cs" />
+    <Compile Include="Models\Signature.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
     <Compile Include="ViewModels\StaffsViewModel.cs" />
     <Compile Include="Views\MidiPlayerCtrl.xaml.cs">
