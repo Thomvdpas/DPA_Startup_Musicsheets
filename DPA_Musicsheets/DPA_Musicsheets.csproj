@@ -103,8 +103,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Adapters\MidiMessage.cs" />
+    <Compile Include="Adapters\MidiTrack.cs" />
     <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\PitchType.cs" />
+    <Compile Include="Facades\MidiSequence.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Managers\ImprovedMusicLoader.cs" />
     <Compile Include="Managers\MidiToLilyHelper.cs" />

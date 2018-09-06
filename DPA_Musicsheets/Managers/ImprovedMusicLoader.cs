@@ -1,4 +1,5 @@
-﻿using DPA_Musicsheets.Models;
+﻿using DPA_Musicsheets.Facades;
+using DPA_Musicsheets.Models;
 using DPA_Musicsheets.ViewModels;
 using PSAMControlLibrary;
 using Sanford.Multimedia.Midi;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using DPA_Musicsheets.Adapters;
 
 namespace DPA_Musicsheets.Managers
 {
@@ -17,14 +19,14 @@ namespace DPA_Musicsheets.Managers
     /// It knows all about all file types, knows every viewmodel and contains all logic.
     /// TODO: Clean this class up.
     /// </summary>
-    public class BetterMusicLoader
+    public class ImprovedMusicLoader
     {
         #region Properties
         public string LilypondText { get; set; }
         public List<MusicalSymbol> WPFStaffs { get; set; } = new List<MusicalSymbol>();
         private static List<Char> notesorder = new List<Char> { 'c', 'd', 'e', 'f', 'g', 'a', 'b' };
 
-        public Sequence MidiSequence { get; set; }
+        public MidiSequence MidiSequence { get; set; }
         #endregion Properties
 
         private int _beatNote = 4;    // De waarde van een beatnote.
@@ -47,10 +49,10 @@ namespace DPA_Musicsheets.Managers
         {
             if (Path.GetExtension(fileName).EndsWith(".mid"))
             {
-                MidiSequence = new Sequence();
+                MidiSequence = new MidiSequence();
                 MidiSequence.Load(fileName);
 
-                MidiPlayerViewModel.MidiSequence = MidiSequence;
+                MidiPlayerViewModel.MidiSequence = MidiSequence.GetSequence();
                 this.LilypondText = LoadMidiIntoLilypond(MidiSequence);
                 this.LilypondViewModel.LilypondTextLoaded(this.LilypondText);
             }
@@ -90,7 +92,7 @@ namespace DPA_Musicsheets.Managers
             this.StaffsViewModel.SetStaffs(this.WPFStaffs);
 
             MidiSequence = GetSequenceFromWPFStaffs();
-            MidiPlayerViewModel.MidiSequence = MidiSequence;
+            MidiPlayerViewModel.MidiSequence = MidiSequence.GetSequence();
         }
 
         #region Midi loading (loads midi to lilypond)
@@ -100,23 +102,22 @@ namespace DPA_Musicsheets.Managers
         /// </summary>
         /// <param name="sequence"></param>
         /// <returns></returns>
-        public string LoadMidiIntoLilypond(Sequence sequence)
+        public string LoadMidiIntoLilypond(MidiSequence midiSequence)
         {
             StringBuilder lilypondContent = new StringBuilder();
             lilypondContent.AppendLine("\\relative c' {");
             lilypondContent.AppendLine("\\clef treble");
 
-            int division = sequence.Division;
+            int division = midiSequence.Division;
             int previousMidiKey = 60; // Central C;
             int previousNoteAbsoluteTicks = 0;
             double percentageOfBarReached = 0;
             bool startedNoteIsClosed = true;
 
-            for (int i = 0; i < sequence.Count(); i++)
+            for (int i = 0; i < midiSequence.Count; i++)
             {
-                Track track = sequence[i];
 
-                foreach (var midiEvent in track.Iterator())
+                foreach (var midiEvent in midiSequence.GetTrack(i).GetEvents())
                 {
                     IMidiMessage midiMessage = midiEvent.MidiMessage;
                     // TODO: Split this switch statements and create separate logic.
@@ -393,9 +394,9 @@ namespace DPA_Musicsheets.Managers
         #region Saving to files
         internal void SaveToMidi(string fileName)
         {
-            Sequence sequence = GetSequenceFromWPFStaffs();
+            MidiSequence midiSequence = GetSequenceFromWPFStaffs();
 
-            sequence.Save(fileName);
+            midiSequence.Save(fileName);
         }
 
         /// <summary>
@@ -404,15 +405,15 @@ namespace DPA_Musicsheets.Managers
         /// TODO: Our code doesn't support repeats (rendering notes multiple times) in midi yet. Maybe with a COMPOSITE this will be easier?
         /// </summary>
         /// <returns></returns>
-        private Sequence GetSequenceFromWPFStaffs()
+        private MidiSequence GetSequenceFromWPFStaffs()
         {
             List<string> notesOrderWithCrosses = new List<string>() { "c", "cis", "d", "dis", "e", "f", "fis", "g", "gis", "a", "ais", "b" };
             int absoluteTicks = 0;
 
-            Sequence sequence = new Sequence();
+            MidiSequence midiSequence = new MidiSequence();
 
-            Track metaTrack = new Track();
-            sequence.Add(metaTrack);
+            MidiTrack metaTrack = new MidiTrack();
+            midiSequence.Add(metaTrack);
 
             // Calculate tempo
             int speed = (60000000 / _bpm);
@@ -422,8 +423,8 @@ namespace DPA_Musicsheets.Managers
             tempo[2] = (byte)(speed & 0xff);
             metaTrack.Insert(0 /* Insert at 0 ticks*/, new MetaMessage(MetaType.Tempo, tempo));
 
-            Track notesTrack = new Track();
-            sequence.Add(notesTrack);
+            MidiTrack notesTrack = new MidiTrack();
+            midiSequence.Add(notesTrack);
 
             for (int i = 0; i < WPFStaffs.Count; i++)
             {
@@ -439,7 +440,7 @@ namespace DPA_Musicsheets.Managers
 
                         double relationToQuartNote = _beatNote / 4.0;
                         double percentageOfBeatNote = (1.0 / _beatNote) / absoluteLength;
-                        double deltaTicks = (sequence.Division / relationToQuartNote) / percentageOfBeatNote;
+                        double deltaTicks = (midiSequence.Division / relationToQuartNote) / percentageOfBeatNote;
 
                         // Calculate height
                         int noteHeight = notesOrderWithCrosses.IndexOf(note.Step.ToLower()) + ((note.Octave + 1) * 12);
@@ -463,7 +464,7 @@ namespace DPA_Musicsheets.Managers
 
             notesTrack.Insert(absoluteTicks, MetaMessage.EndOfTrackMessage);
             metaTrack.Insert(absoluteTicks, MetaMessage.EndOfTrackMessage);
-            return sequence;
+            return midiSequence;
         }
 
         internal void SaveToPDF(string fileName)
