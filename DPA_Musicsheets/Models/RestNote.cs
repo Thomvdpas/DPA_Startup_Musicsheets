@@ -9,6 +9,11 @@ namespace DPA_Musicsheets.Models
 
         }
 
+        public override BaseNote ShallowClone()
+        {
+            return (RestNote) MemberwiseClone();
+        }
+
         public override BaseNote Clone()
         {
             return new RestNote(Duration);

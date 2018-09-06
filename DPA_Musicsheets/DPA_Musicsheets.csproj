@@ -105,6 +105,7 @@
     </ApplicationDefinition>
     <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\PitchType.cs" />
+    <Compile Include="Interface\ICloneable.cs" />
     <Compile Include="Managers\MidiToLilyHelper.cs" />
     <Compile Include="Managers\MusicLoader.cs" />
     <Compile Include="Models\Composition.cs" />

@@ -9,6 +9,11 @@ namespace DPA_Musicsheets.Models
             
         }
 
+        public override BaseNote ShallowClone()
+        {
+            return (MusicNote) MemberwiseClone();
+        }
+
         public override BaseNote Clone()
         {
             return new MusicNote(NoteType, Duration, PitchType);

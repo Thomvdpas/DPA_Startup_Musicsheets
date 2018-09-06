@@ -1,8 +1,9 @@
 ﻿using DPA_Musicsheets.Enums;
+using DPA_Musicsheets.Interface;
 
 namespace DPA_Musicsheets.Models
 {
-    public abstract class BaseNote
+    public abstract class BaseNote : ICloneable<BaseNote>
     {
         private double _duration;
 
@@ -22,6 +23,8 @@ namespace DPA_Musicsheets.Models
             NoteType = noteType;
             Duration = duration;
         }
+
+        public abstract BaseNote ShallowClone();
 
         public abstract BaseNote Clone();
     }
