@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DPA_Musicsheets.Interface;
+using DPA_Musicsheets.Interfaces;
 
 namespace DPA_Musicsheets.Models
 {

@@ -1,4 +1,4 @@
-﻿namespace DPA_Musicsheets.Interface
+﻿namespace DPA_Musicsheets.Interfaces
 {
     public interface ICloneable<T>
     {

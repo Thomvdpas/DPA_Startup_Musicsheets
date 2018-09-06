@@ -1,5 +1,5 @@
 ﻿using DPA_Musicsheets.Enums;
-using DPA_Musicsheets.Interface;
+using DPA_Musicsheets.Interfaces;
 
 namespace DPA_Musicsheets.Models
 {

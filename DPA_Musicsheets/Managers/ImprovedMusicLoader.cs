@@ -17,7 +17,7 @@ namespace DPA_Musicsheets.Managers
     /// It knows all about all file types, knows every viewmodel and contains all logic.
     /// TODO: Clean this class up.
     /// </summary>
-    public class MusicLoader
+    public class BetterMusicLoader
     {
         #region Properties
         public string LilypondText { get; set; }
@@ -61,7 +61,7 @@ namespace DPA_Musicsheets.Managers
                 {
                     sb.AppendLine(line);
                 }
-                
+
                 this.LilypondText = sb.ToString();
                 this.LilypondViewModel.LilypondTextLoaded(this.LilypondText);
             }
@@ -163,11 +163,11 @@ namespace DPA_Musicsheets.Managers
                             var channelMessage = midiEvent.MidiMessage as ChannelMessage;
                             if (channelMessage.Command == ChannelCommand.NoteOn)
                             {
-                                if(channelMessage.Data2 > 0) // Data2 = loudness
+                                if (channelMessage.Data2 > 0) // Data2 = loudness
                                 {
                                     // Append the new note.
                                     lilypondContent.Append(MidiToLilyHelper.GetLilyNoteName(previousMidiKey, channelMessage.Data1));
-                                    
+
                                     previousMidiKey = channelMessage.Data1;
                                     startedNoteIsClosed = false;
                                 }
@@ -305,7 +305,7 @@ namespace DPA_Musicsheets.Managers
 
                         var note = new Note(currentToken.Value[0].ToString().ToUpper(), alter, previousOctave, (MusicalSymbolDuration)noteLength, NoteStemDirection.Up, tie, new List<NoteBeamType>() { NoteBeamType.Single });
                         note.NumberOfDots += currentToken.Value.Count(c => c.Equals('.'));
-                        
+
                         symbols.Add(note);
                         break;
                     case LilypondTokenKind.Rest:
@@ -342,7 +342,7 @@ namespace DPA_Musicsheets.Managers
 
             return symbols;
         }
-        
+
         private static LinkedList<LilypondToken> GetTokensFromLilypond(string content)
         {
             var tokens = new LinkedList<LilypondToken>();
@@ -397,7 +397,7 @@ namespace DPA_Musicsheets.Managers
 
             sequence.Save(fileName);
         }
-        
+
         /// <summary>
         /// We create MIDI from WPF staffs, 2 different dependencies, not a good practice.
         /// TODO: Create MIDI from our own domain classes.
@@ -490,9 +490,10 @@ namespace DPA_Musicsheets.Managers
             };
 
             process.Start();
-            while (!process.HasExited) { /* Wait for exit */
-                }
-                if (sourceFolder != targetFolder || sourceFileName != targetFileName)
+            while (!process.HasExited)
+            { /* Wait for exit */
+            }
+            if (sourceFolder != targetFolder || sourceFileName != targetFileName)
             {
                 File.Move(sourceFolder + "\\" + sourceFileName + ".pdf", targetFolder + "\\" + targetFileName + ".pdf");
                 File.Delete(tmpFileName);
