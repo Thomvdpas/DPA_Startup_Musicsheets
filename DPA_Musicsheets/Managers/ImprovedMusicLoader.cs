@@ -47,30 +47,41 @@ namespace DPA_Musicsheets.Managers
         /// <param name="fileName"></param>
         public void OpenFile(string fileName)
         {
-            if (Path.GetExtension(fileName).EndsWith(".mid"))
+            var fileManager = new FileManager();
+            var result = fileManager.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(result))
             {
-                MidiSequence = new MidiSequence();
-                MidiSequence.Load(fileName);
-
-                MidiPlayerViewModel.MidiSequence = MidiSequence.GetSequence();
-                this.LilypondText = LoadMidiIntoLilypond(MidiSequence);
-                this.LilypondViewModel.LilypondTextLoaded(this.LilypondText);
-            }
-            else if (Path.GetExtension(fileName).EndsWith(".ly"))
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (var line in File.ReadAllLines(fileName))
-                {
-                    sb.AppendLine(line);
-                }
-
-                this.LilypondText = sb.ToString();
-                this.LilypondViewModel.LilypondTextLoaded(this.LilypondText);
+                Console.WriteLine(result);
             }
             else
             {
                 throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
             }
+
+            //if (Path.GetExtension(fileName).EndsWith(".mid"))
+            //{
+            //    MidiSequence = new MidiSequence();
+            //    MidiSequence.Load(fileName);
+
+            //    MidiPlayerViewModel.MidiSequence = MidiSequence.GetSequence();
+            //    this.LilypondText = LoadMidiIntoLilypond(MidiSequence);
+            //    this.LilypondViewModel.LilypondTextLoaded(this.LilypondText);
+            //}
+            //else if (Path.GetExtension(fileName).EndsWith(".ly"))
+            //{
+            //    StringBuilder sb = new StringBuilder();
+            //    foreach (var line in File.ReadAllLines(fileName))
+            //    {
+            //        sb.AppendLine(line);
+            //    }
+
+            //    this.LilypondText = sb.ToString();
+            //    this.LilypondViewModel.LilypondTextLoaded(this.LilypondText);
+            //}
+            //else
+            //{
+            //    throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
+            //}
 
             LoadLilypondIntoWpfStaffsAndMidi(LilypondText);
         }
