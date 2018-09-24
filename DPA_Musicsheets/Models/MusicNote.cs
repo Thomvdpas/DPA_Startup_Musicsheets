@@ -4,7 +4,7 @@ namespace DPA_Musicsheets.Models
 {
     public class MusicNote : BaseNote
     {
-        public MusicNote(NoteType noteType, double duration, PitchType pitchType) : base(pitchType, noteType, duration)
+        public MusicNote(PitchType pitchType, NoteType noteType, double duration) : base(pitchType, noteType, duration)
         {
             
         }
@@ -16,7 +16,7 @@ namespace DPA_Musicsheets.Models
 
         public override BaseNote Clone()
         {
-            return new MusicNote(NoteType, Duration, PitchType);
+            return new MusicNote(PitchType, NoteType, Duration);
         }
     }
 }
