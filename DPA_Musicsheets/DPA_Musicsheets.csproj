@@ -81,6 +81,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -105,10 +106,13 @@
     </ApplicationDefinition>
     <Compile Include="Adapters\MidiMessage.cs" />
     <Compile Include="Adapters\MidiTrack.cs" />
+    <Compile Include="Enums\FileExtension.cs" />
     <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\PitchType.cs" />
     <Compile Include="Facades\MidiSequence.cs" />
+    <Compile Include="Factories\FileLoaderFactory.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
+    <Compile Include="Managers\FileManager.cs" />
     <Compile Include="Managers\ImprovedMusicLoader.cs" />
     <Compile Include="Managers\MidiToLilyHelper.cs" />
     <Compile Include="Managers\MusicLoader.cs" />

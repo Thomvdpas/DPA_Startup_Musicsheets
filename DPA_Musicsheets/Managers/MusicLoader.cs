@@ -434,7 +434,7 @@ namespace DPA_Musicsheets.Managers
                         Note note = musicalSymbol as Note;
 
                         // Calculate duration
-                        double absoluteLength = 1.0 / (double)note.Duration;
+                        double absoluteLength = 1.0 / (double) note.Duration;
                         absoluteLength += (absoluteLength / 2.0) * note.NumberOfDots;
 
                         double relationToQuartNote = _beatNote / 4.0;
