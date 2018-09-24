@@ -6,38 +6,38 @@ namespace DPA_Musicsheets.Facades
     public class MidiSequence
     {
 
-        private Sequence _internalSequence { get; set; }
-        public int Division => _internalSequence.Division;
-        public int Count => _internalSequence.Count;
+        private Sequence InternalSequence { get; set; }
+        public int Division => InternalSequence.Division;
+        public int Count => InternalSequence.Count;
 
         public MidiSequence()
         {
-            this._internalSequence = new Sequence();
+            InternalSequence = new Sequence();
         }
 
         public Sequence GetSequence()
         {
-            return _internalSequence;
+            return InternalSequence;
         }
 
         public MidiTrack GetTrack(int number)
         {
-            return new MidiTrack(_internalSequence[number]);
+            return new MidiTrack(InternalSequence[number]);
         }
 
         internal void Load(string fileName)
         {
-            _internalSequence.Load(fileName);
+            InternalSequence.Load(fileName);
         }
 
         public void Save(string fileName)
         {
-            _internalSequence.Save(fileName);
+            InternalSequence.Save(fileName);
         }
 
         public void Add(MidiTrack midiTrack)
         {
-            _internalSequence.Add(midiTrack.GetTrack());
+            InternalSequence.Add(midiTrack.GetTrack());
         }
 
     }

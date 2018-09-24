@@ -3,12 +3,16 @@ using System.IO;
 using System.Text;
 using DPA_Musicsheets.Enums;
 using DPA_Musicsheets.Facades;
-using DPA_Musicsheets.ViewModels;
 
 namespace DPA_Musicsheets.Managers
 {
+    public delegate string EventHandler(string result);
+
     public class FileManager
     {
+        public static event EventHandler MidiSequenceEvent;
+        public static event EventHandler LilypondTextLoadedEvent;
+
         public string LoadFile(string filePath)
         {
             var fileInfo = new FileInfo(filePath);

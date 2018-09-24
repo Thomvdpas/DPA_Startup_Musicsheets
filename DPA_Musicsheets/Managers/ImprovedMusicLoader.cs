@@ -48,10 +48,10 @@ namespace DPA_Musicsheets.Managers
         public void OpenFile(string fileName)
         {
             var fileManager = new FileManager();
-            var lilypondText = fileManager.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(lilypondText))
+            var result = fileManager.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(result))
             {
-                Console.WriteLine(lilypondText);
+                Console.WriteLine(result);
             }
             else
             {
