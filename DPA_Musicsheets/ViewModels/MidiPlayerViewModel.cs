@@ -1,8 +1,10 @@
 ﻿using DPA_Musicsheets.Managers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using Sanford.Multimedia.Midi;
 using System;
+using DPA_Musicsheets.Adapters;
+using DPA_Musicsheets.Facades;
+using Sanford.Multimedia.Midi;
 
 namespace DPA_Musicsheets.ViewModels
 {
@@ -12,20 +14,20 @@ namespace DPA_Musicsheets.ViewModels
     /// </summary>
     public class MidiPlayerViewModel : ViewModelBase
     {
-        private OutputDevice _outputDevice;
+        private readonly OutputDevice _outputDevice;
         private bool _running;
 
         // This sequencer creates a possibility to play a sequence.
         // It has a timer and raises events on the right moments.
-        private Sequencer _sequencer;
+        private readonly MidiSequencer _midiSequencer;
 
-        public Sequence MidiSequence
+        public MidiSequence MidiSequence
         {
-            get { return _sequencer.Sequence; }
+            get => _midiSequencer.GetSequence();
             set
             {
                 StopCommand.Execute(null);
-                _sequencer.Sequence = value;
+                _midiSequencer.SetSequence(value);
                 UpdateButtons();
             }
         }
@@ -36,14 +38,14 @@ namespace DPA_Musicsheets.ViewModels
             // The audio will be streamed towards this output.
             // DeviceID 0 is your computer's audio channel.
             _outputDevice = new OutputDevice(0);
-            _sequencer = new Sequencer();
+            _midiSequencer = new MidiSequencer();
 
-            _sequencer.ChannelMessagePlayed += ChannelMessagePlayed;
+            _midiSequencer.GetSequencer().ChannelMessagePlayed += ChannelMessagePlayed;
 
             // Wanneer de sequence klaar is moeten we alles closen en stoppen.
-            _sequencer.PlayingCompleted += (playingSender, playingEvent) =>
+            _midiSequencer.GetSequencer().PlayingCompleted += (playingSender, playingEvent) =>
             {
-                _sequencer.Stop();
+                _midiSequencer.Stop();
                 _running = false;
             };
 
@@ -83,23 +85,23 @@ namespace DPA_Musicsheets.ViewModels
             if (!_running)
             {
                 _running = true;
-                _sequencer.Continue();
+                _midiSequencer.Continue();
                 UpdateButtons();
             }
-        }, () => !_running && _sequencer.Sequence != null);
+        }, () => !_running && _midiSequencer.GetSequence() != null);
 
         public RelayCommand StopCommand => new RelayCommand(() =>
         {
             _running = false;
-            _sequencer.Stop();
-            _sequencer.Position = 0;
+            _midiSequencer.Stop();
+            _midiSequencer.GetSequencer().Position = 0;
             UpdateButtons();
         }, () => _running);
 
         public RelayCommand PauseCommand => new RelayCommand(() =>
         {
             _running = false;
-            _sequencer.Stop();
+            _midiSequencer.Stop();
             UpdateButtons();
         }, () => _running);
 
@@ -112,8 +114,8 @@ namespace DPA_Musicsheets.ViewModels
         {
             base.Cleanup();
 
-            _sequencer.Stop();
-            _sequencer.Dispose();
+            _midiSequencer.Stop();
+            _midiSequencer.Dispose();
             _outputDevice.Dispose();
         }
     }

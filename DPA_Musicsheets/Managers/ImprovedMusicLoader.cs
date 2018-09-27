@@ -103,7 +103,7 @@ namespace DPA_Musicsheets.Managers
             this.StaffsViewModel.SetStaffs(this.WPFStaffs);
 
             MidiSequence = GetSequenceFromWPFStaffs();
-            MidiPlayerViewModel.MidiSequence = MidiSequence.GetSequence();
+            MidiPlayerViewModel.MidiSequence = MidiSequence;
         }
 
         #region Midi loading (loads midi to lilypond)

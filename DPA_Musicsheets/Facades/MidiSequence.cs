@@ -15,6 +15,11 @@ namespace DPA_Musicsheets.Facades
             InternalSequence = new Sequence();
         }
 
+        public MidiSequence(Sequence sequence)
+        {
+            InternalSequence = sequence;
+        }
+
         public Sequence GetSequence()
         {
             return InternalSequence;

@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using DPA_Musicsheets.Adapters;
+using DPA_Musicsheets.Facades;
 
 namespace DPA_Musicsheets.Managers
 {
@@ -24,7 +26,7 @@ namespace DPA_Musicsheets.Managers
         public List<MusicalSymbol> WPFStaffs { get; set; } = new List<MusicalSymbol>();
         private static List<Char> notesorder = new List<Char> { 'c', 'd', 'e', 'f', 'g', 'a', 'b' };
 
-        public Sequence MidiSequence { get; set; }
+        public MidiSequence MidiSequence { get; set; }
         #endregion Properties
 
         private int _beatNote = 4;    // De waarde van een beatnote.
@@ -47,11 +49,11 @@ namespace DPA_Musicsheets.Managers
         {
             if (Path.GetExtension(fileName).EndsWith(".mid"))
             {
-                MidiSequence = new Sequence();
+                MidiSequence = new MidiSequence(new Sequence());
                 MidiSequence.Load(fileName);
 
                 MidiPlayerViewModel.MidiSequence = MidiSequence;
-                this.LilypondText = LoadMidiIntoLilypond(MidiSequence);
+                this.LilypondText = LoadMidiIntoLilypond(MidiSequence.GetSequence());
                 this.LilypondViewModel.LilypondTextLoaded(this.LilypondText);
             }
             else if (Path.GetExtension(fileName).EndsWith(".ly"))
@@ -393,7 +395,7 @@ namespace DPA_Musicsheets.Managers
         #region Saving to files
         internal void SaveToMidi(string fileName)
         {
-            Sequence sequence = GetSequenceFromWPFStaffs();
+            MidiSequence sequence = GetSequenceFromWPFStaffs();
 
             sequence.Save(fileName);
         }
@@ -404,15 +406,15 @@ namespace DPA_Musicsheets.Managers
         /// TODO: Our code doesn't support repeats (rendering notes multiple times) in midi yet. Maybe with a COMPOSITE this will be easier?
         /// </summary>
         /// <returns></returns>
-        private Sequence GetSequenceFromWPFStaffs()
+        private MidiSequence GetSequenceFromWPFStaffs()
         {
             List<string> notesOrderWithCrosses = new List<string>() { "c", "cis", "d", "dis", "e", "f", "fis", "g", "gis", "a", "ais", "b" };
             int absoluteTicks = 0;
 
-            Sequence sequence = new Sequence();
+            MidiSequence sequence = new MidiSequence(new Sequence());
 
-            Track metaTrack = new Track();
-            sequence.Add(metaTrack);
+            MidiTrack midiTrack = new MidiTrack(new Track());
+            sequence.Add(midiTrack);
 
             // Calculate tempo
             int speed = (60000000 / _bpm);
@@ -420,9 +422,9 @@ namespace DPA_Musicsheets.Managers
             tempo[0] = (byte)((speed >> 16) & 0xff);
             tempo[1] = (byte)((speed >> 8) & 0xff);
             tempo[2] = (byte)(speed & 0xff);
-            metaTrack.Insert(0 /* Insert at 0 ticks*/, new MetaMessage(MetaType.Tempo, tempo));
+            midiTrack.GetTrack().Insert(0 /* Insert at 0 ticks*/, new MetaMessage(MetaType.Tempo, tempo));
 
-            Track notesTrack = new Track();
+            MidiTrack notesTrack = new MidiTrack(new Track());
             sequence.Add(notesTrack);
 
             for (int i = 0; i < WPFStaffs.Count; i++)
@@ -454,7 +456,7 @@ namespace DPA_Musicsheets.Managers
                         byte[] timeSignature = new byte[4];
                         timeSignature[0] = (byte)_beatsPerBar;
                         timeSignature[1] = (byte)(Math.Log(_beatNote) / Math.Log(2));
-                        metaTrack.Insert(absoluteTicks, new MetaMessage(MetaType.TimeSignature, timeSignature));
+                        midiTrack.GetTrack().Insert(absoluteTicks, new MetaMessage(MetaType.TimeSignature, timeSignature));
                         break;
                     default:
                         break;
@@ -462,7 +464,7 @@ namespace DPA_Musicsheets.Managers
             }
 
             notesTrack.Insert(absoluteTicks, MetaMessage.EndOfTrackMessage);
-            metaTrack.Insert(absoluteTicks, MetaMessage.EndOfTrackMessage);
+            midiTrack.GetTrack().Insert(absoluteTicks, MetaMessage.EndOfTrackMessage);
             return sequence;
         }
 
