@@ -4,6 +4,11 @@ namespace DPA_Musicsheets.Models
 {
     public class RestNote : BaseNote
     {
+        public RestNote()
+        {
+
+        }
+
         public RestNote(double duration) : base(PitchType.None, NoteType.Empty, duration)
         {
 

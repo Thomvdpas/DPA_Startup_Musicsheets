@@ -4,6 +4,12 @@ namespace DPA_Musicsheets.Models
 {
     public class MusicNote : BaseNote
     {
+
+        public MusicNote(NoteType noteType) : base(noteType)
+        {
+
+        }
+
         public MusicNote(PitchType pitchType, NoteType noteType, double duration) : base(pitchType, noteType, duration)
         {
             

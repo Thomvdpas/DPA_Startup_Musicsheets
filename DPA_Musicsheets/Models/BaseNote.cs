@@ -7,14 +7,24 @@ namespace DPA_Musicsheets.Models
     {
         private double _duration;
 
-        protected PitchType PitchType;
+        public PitchType PitchType;
         protected NoteType NoteType;
-        protected bool IsPoint;
+        public bool IsPoint;
 
-        protected double Duration
+        public double Duration
         {
             get => IsPoint ? _duration * 1.5 : _duration;
             set => _duration = value;
+        }
+
+        protected BaseNote()
+        {
+
+        }
+
+        protected BaseNote(NoteType noteType)
+        {
+            NoteType = noteType;
         }
 
         protected BaseNote(PitchType pitchType, NoteType noteType, double duration)
