@@ -8,6 +8,12 @@ namespace DPA_Musicsheets.Adapters
         private readonly Sequencer _internalSequencer;
         private MidiSequence _internalMidiSequence;
 
+        public int Position
+        {
+            get => _internalSequencer.Position;
+            set => _internalSequencer.Position = value;
+        }
+
         public MidiSequencer()
         {
             _internalSequencer = new Sequencer();

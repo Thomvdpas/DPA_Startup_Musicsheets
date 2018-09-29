@@ -13,7 +13,7 @@ namespace DPA_Musicsheets.ViewModels
 {
     public class LilypondViewModel : ViewModelBase
     {
-        private MusicLoader _musicLoader;
+        private readonly MusicLoader _musicLoader;
         private MainViewModel _mainViewModel { get; set; }
 
         private string _text;
@@ -26,10 +26,7 @@ namespace DPA_Musicsheets.ViewModels
         /// </summary>
         public string LilypondText
         {
-            get
-            {
-                return _text;
-            }
+            get => _text;
             set
             {
                 if (!_waitingForRender && !_textChangedByLoad)

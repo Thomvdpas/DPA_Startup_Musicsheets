@@ -1,7 +1,6 @@
 ﻿using DPA_Musicsheets.Managers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Win32;
 using System;
 using System.Windows.Input;
 
@@ -9,6 +8,11 @@ namespace DPA_Musicsheets.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+
+        private readonly MusicLoader _musicLoader;
+
+        private readonly FileManager _fileManager;
+
         private string _fileName;
         public string FileName
         {
@@ -31,22 +35,17 @@ namespace DPA_Musicsheets.ViewModels
             set { _currentState = value; RaisePropertyChanged(() => CurrentState); }
         }
 
-        private MusicLoader _musicLoader;
-
         public MainViewModel(MusicLoader musicLoader)
         {
             // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer?
             _musicLoader = musicLoader;
+            _fileManager = new FileManager();
             FileName = @"Files/Alle-eendjes-zwemmen-in-het-water.mid";
         }
 
         public ICommand OpenFileCommand => new RelayCommand(() =>
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "Midi or LilyPond files (*.mid *.ly)|*.mid;*.ly" };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                FileName = openFileDialog.FileName;
-            }
+            FileName =_fileManager.OpenFile();
         });
 
         public ICommand LoadCommand => new RelayCommand(() =>

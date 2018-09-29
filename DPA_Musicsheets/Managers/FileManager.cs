@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using DPA_Musicsheets.Enums;
 using DPA_Musicsheets.Facades;
+using Microsoft.Win32;
 
 namespace DPA_Musicsheets.Managers
 {
@@ -12,6 +13,12 @@ namespace DPA_Musicsheets.Managers
     {
         public static event EventHandler MidiSequenceEvent;
         public static event EventHandler LilypondTextLoadedEvent;
+
+        public string OpenFile()
+        {
+            var openFileDialog = new OpenFileDialog() { Filter = "Midi or LilyPond files (*.mid *.ly)|*.mid;*.ly" };
+            return openFileDialog.ShowDialog() == true ? openFileDialog.FileName : null;
+        }
 
         public string LoadFile(string filePath)
         {

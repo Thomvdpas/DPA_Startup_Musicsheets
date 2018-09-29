@@ -21,6 +21,8 @@ namespace DPA_Musicsheets.Managers
     /// </summary>
     public class ImprovedMusicLoader
     {
+        public event EventHandler<MidiSequencer> MidiLoaded;
+
         #region Properties
         public string LilypondText { get; set; }
         public List<MusicalSymbol> WPFStaffs { get; set; } = new List<MusicalSymbol>();

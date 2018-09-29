@@ -120,6 +120,7 @@
     <Compile Include="Managers\ImprovedMusicLoader.cs" />
     <Compile Include="Managers\MidiToLilyHelper.cs" />
     <Compile Include="Managers\MusicLoader.cs" />
+    <Compile Include="Managers\MidiPlayer.cs" />
     <Compile Include="Models\Composition.cs" />
     <Compile Include="Models\LilypondToken.cs" />
     <Compile Include="Models\LilypondTokenKind.cs" />
