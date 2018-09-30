@@ -1,11 +1,9 @@
 ﻿using Sanford.Multimedia.Midi;
-using DPA_Musicsheets.Adapters;
 
-namespace DPA_Musicsheets.Facades
+namespace DPA_Musicsheets.Adapters
 {
     public class MidiSequence
     {
-
         private Sequence InternalSequence { get; set; }
         public int Division => InternalSequence.Division;
         public int Count => InternalSequence.Count;

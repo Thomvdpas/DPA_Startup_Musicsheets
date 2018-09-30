@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 
 namespace DPA_Musicsheets.ViewModels
 {
+    /// <inheritdoc />
     /// <summary>
     /// The viewmodel for playing midi sequences.
     /// It supports starting, stopping and restarting.
@@ -17,8 +18,8 @@ namespace DPA_Musicsheets.ViewModels
             _midiPlayer = new MidiPlayer();
             musicLoader.MidiLoaded += (_, args) => _midiPlayer.MidiSequencer = args;
 
-            // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer?
-            musicLoader.MidiPlayerViewModel = this;
+            //// TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer?
+            //musicLoader.MidiPlayerViewModel = this;
         }
 
         private void UpdateButtons()

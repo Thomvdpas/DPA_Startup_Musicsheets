@@ -8,17 +8,18 @@ namespace DPA_Musicsheets.Managers
     {
         private readonly OutputDevice _outputDevice;
         private MidiSequencer _midiSequencer;
-        public bool IsRunning { get; set; }
 
         public MidiSequencer MidiSequencer
         {
-            get => MidiSequencer;
+            get => _midiSequencer;
             set
             {
-                MidiSequencer = value ?? throw new ArgumentNullException(nameof(value));
+                _midiSequencer = value ?? throw new ArgumentNullException(nameof(value));
                 _midiSequencer = value;
             }
         }
+
+        public bool IsRunning { get; set; }
 
         public MidiPlayer()
         {
@@ -55,6 +56,13 @@ namespace DPA_Musicsheets.Managers
                 // _outDevice may be false when it is being disposed
                 // so this is the only safe way to prevent race conditions
             }
+        }
+
+        public void Load(Sequence sequence)
+        {
+            if (_midiSequencer == null) return;
+            Stop();
+            _midiSequencer.SetSequence(new MidiSequence(sequence));
         }
 
         public void Start()

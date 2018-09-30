@@ -1,5 +1,4 @@
-﻿using DPA_Musicsheets.Facades;
-using DPA_Musicsheets.Models;
+﻿using DPA_Musicsheets.Models;
 using DPA_Musicsheets.ViewModels;
 using PSAMControlLibrary;
 using Sanford.Multimedia.Midi;
@@ -22,6 +21,8 @@ namespace DPA_Musicsheets.Managers
     public class ImprovedMusicLoader
     {
         public event EventHandler<MidiSequencer> MidiLoaded;
+        public event EventHandler<MidiSequencer> StaffsLoaded;
+        public event EventHandler<string> LilypondLoaded;
 
         #region Properties
         public string LilypondText { get; set; }
@@ -35,10 +36,10 @@ namespace DPA_Musicsheets.Managers
         private int _bpm = 120;       // Aantal beatnotes per minute.
         private int _beatsPerBar;     // Aantal beatnotes per maat.
 
-        public MainViewModel MainViewModel { get; set; }
-        public LilypondViewModel LilypondViewModel { get; set; }
-        public MidiPlayerViewModel MidiPlayerViewModel { get; set; }
-        public StaffsViewModel StaffsViewModel { get; set; }
+        //public MainViewModel MainViewModel { get; set; }
+        //public LilypondViewModel LilypondViewModel { get; set; }
+        //public MidiPlayerViewModel MidiPlayerViewModel { get; set; }
+        //public StaffsViewModel StaffsViewModel { get; set; }
 
         /// <summary>
         /// Opens a file.
@@ -523,5 +524,10 @@ namespace DPA_Musicsheets.Managers
             }
         }
         #endregion Saving to files
+
+        protected virtual void OnMidiLoaded(MidiSequencer e)
+        {
+            MidiLoaded?.Invoke(this, e);
+        }
     }
 }

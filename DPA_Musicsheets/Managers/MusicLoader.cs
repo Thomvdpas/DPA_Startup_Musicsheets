@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using DPA_Musicsheets.Adapters;
-using DPA_Musicsheets.Facades;
 
 namespace DPA_Musicsheets.Managers
 {

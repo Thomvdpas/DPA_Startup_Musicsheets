@@ -113,7 +113,7 @@
     <Compile Include="Enums\FileExtension.cs" />
     <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\PitchType.cs" />
-    <Compile Include="Facades\MidiSequence.cs" />
+    <Compile Include="Adapters\MidiSequence.cs" />
     <Compile Include="Factories\FileLoaderFactory.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Managers\FileManager.cs" />
@@ -130,6 +130,7 @@
     <Compile Include="Models\Repetition.cs" />
     <Compile Include="Models\RestNote.cs" />
     <Compile Include="Models\Signature.cs" />
+    <Compile Include="Parser\LilypondToStaff.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
     <Compile Include="ViewModels\StaffsViewModel.cs" />
     <Compile Include="Views\MidiPlayerCtrl.xaml.cs">
@@ -247,6 +248,9 @@
     <Content Include="Files\Eenvoudige voorbeeldfiles\Punten.ly" />
     <Content Include="Files\Eenvoudige voorbeeldfiles\Rusten.ly" />
     <Content Include="Files\Eenvoudige voorbeeldfiles\Standaard_noten.ly" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Facades\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,4 @@
-﻿using DPA_Musicsheets.Facades;
-using Sanford.Multimedia.Midi;
+﻿using Sanford.Multimedia.Midi;
 
 namespace DPA_Musicsheets.Adapters
 {

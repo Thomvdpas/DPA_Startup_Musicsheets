@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using DPA_Musicsheets.Adapters;
 using DPA_Musicsheets.Enums;
-using DPA_Musicsheets.Facades;
 using Microsoft.Win32;
 
 namespace DPA_Musicsheets.Managers
