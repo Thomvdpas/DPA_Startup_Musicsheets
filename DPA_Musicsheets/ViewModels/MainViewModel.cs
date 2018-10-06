@@ -32,14 +32,14 @@ namespace DPA_Musicsheets.ViewModels
 
         private void OpenFile()
         {
-            OpenFileCommand openFileCommand = new OpenFileCommand();
+            var openFileCommand = new OpenFileCommand();
             openFileCommand.Execute();
             RaisePropertyChanged(nameof(FileName));
         }
 
         private void LoadFile()
         {
-            LoadFileCommand loadFileCommand = new LoadFileCommand();
+            var loadFileCommand = new LoadFileCommand();
             loadFileCommand.Execute();
             _piece = loadFileCommand.Piece;
         }

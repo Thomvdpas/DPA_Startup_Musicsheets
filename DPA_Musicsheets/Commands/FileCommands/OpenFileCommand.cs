@@ -12,7 +12,7 @@ namespace DPA_Musicsheets.Command
 
         public override void Execute()
         {
-            FileManager fileManager = new FileManager();
+            var fileManager = new FileManager();
             MusicLoader = fileManager.GetMusicLoader();
         }
     }

@@ -14,9 +14,8 @@ namespace DPA_Musicsheets.Command
         {
             if (MusicLoader == null) return;
 
-            if (MusicLoader is LilypondMusicLoader)
+            if (MusicLoader is LilypondMusicLoader lilypondMusicLoader)
             {
-                LilypondMusicLoader lilypondMusicLoader = (LilypondMusicLoader) MusicLoader;
                 //lilypondMusicLoader.IsFixingBars = true;
                 Piece = lilypondMusicLoader.Load();
             }

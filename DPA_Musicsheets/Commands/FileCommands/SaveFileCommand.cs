@@ -12,7 +12,7 @@ namespace DPA_Musicsheets.Commands.FileCommands
 {
     public class SaveFileCommand : FileHandlingCommand
     {
-        private string _filter;
+        private readonly string _filter;
 
         public SaveFileCommand(string filter)
         {
@@ -23,12 +23,12 @@ namespace DPA_Musicsheets.Commands.FileCommands
         {
             if (Piece == null) return;
 
-            LilypondMusicLoader lilypondMusicLoader = new LilypondMusicLoader();
+            var lilypondMusicLoader = new LilypondMusicLoader();
 
             //lilypondMusicLoader.IsFixingBars = true;
 
             var piece = lilypondMusicLoader.LoadLilypondText(LilypondText);
-            FileManager fileManager = new FileManager();
+            var fileManager = new FileManager();
             var message = fileManager.WriteFile(piece, _filter);
 
             if (message != null)
