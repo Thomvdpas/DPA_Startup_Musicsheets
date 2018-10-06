@@ -4,24 +4,16 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Windows.Input;
 using DPA_Musicsheets.Command;
+using DPA_Musicsheets.Models;
 
 namespace DPA_Musicsheets.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly FileManager _fileManager;
+        private Piece _piece;
 
-        private string _fileName;
-        public string FileName
-        {
-            get => FileHandlingCommand.MusicLoader.FilePath ?? string.Empty;
-            set
-            {
-                _fileName = value;
-                RaisePropertyChanged(() => FileName);
-            }
-        }
-
+        public string FileName => FileHandlingCommand.MusicLoader.FilePath ?? string.Empty;
+            
         /// <summary>
         /// The current state can be used to display some text.
         /// "Rendering..." is a text that will be displayed for example.
@@ -35,20 +27,27 @@ namespace DPA_Musicsheets.ViewModels
 
         public MainViewModel()
         {
-            // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer?
-            _fileManager = new FileManager();
-            FileName = @"Files/Alle-eendjes-zwemmen-in-het-water.mid";
+
         }
 
-        public ICommand OpenFileCommand => new RelayCommand(() =>
+        private void OpenFile()
         {
-            FileName =_fileManager.OpenFile();
-        });
+            OpenFileCommand openFileCommand = new OpenFileCommand();
+            openFileCommand.Execute();
+            RaisePropertyChanged(nameof(FileName));
+        }
 
-        public ICommand LoadCommand => new RelayCommand(() =>
+        private void LoadFile()
         {
-            _fileManager.LoadFile(FileName);
-        });
+            LoadFileCommand loadFileCommand = new LoadFileCommand();
+            loadFileCommand.Execute();
+            _piece = loadFileCommand.Piece;
+        }
+
+        public ICommand OpenFileCommand => new RelayCommand(OpenFile);
+
+        public ICommand LoadCommand => new RelayCommand(LoadFile);
+
 
         #region Focus and key commands, these can be used for implementing hotkeys
         public ICommand OnLostFocusCommand => new RelayCommand(() =>

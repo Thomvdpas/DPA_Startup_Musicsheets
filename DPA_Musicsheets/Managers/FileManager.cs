@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using DPA_Musicsheets.Adapters;
 using DPA_Musicsheets.Enums;
+using DPA_Musicsheets.Models;
 using DPA_Musicsheets.MusicLoaders;
 using Microsoft.Win32;
 
@@ -65,6 +66,11 @@ namespace DPA_Musicsheets.Managers
             var midiSequence = new MidiSequence();
             midiSequence.Load(filePath);
             return "Midi";
+        }
+
+        public string WriteFile(Piece piece, string filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

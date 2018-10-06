@@ -9,7 +9,7 @@ namespace DPA_Musicsheets.Command
 {
     public abstract class AbstractCommand
     {
-        public Piece piece { get; set; }
+        public Piece Piece { get; set; }
 
         public string LilypondText { get; set; }
 
