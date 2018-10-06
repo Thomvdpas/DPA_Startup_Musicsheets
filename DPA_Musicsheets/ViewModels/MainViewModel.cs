@@ -3,18 +3,18 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Windows.Input;
+using DPA_Musicsheets.Command;
 
 namespace DPA_Musicsheets.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly MusicLoader _musicLoader;
         private readonly FileManager _fileManager;
 
         private string _fileName;
         public string FileName
         {
-            get => _fileName;
+            get => FileHandlingCommand.MusicLoader.FilePath ?? string.Empty;
             set
             {
                 _fileName = value;
@@ -33,10 +33,9 @@ namespace DPA_Musicsheets.ViewModels
             set { _currentState = value; RaisePropertyChanged(() => CurrentState); }
         }
 
-        public MainViewModel(MusicLoader musicLoader)
+        public MainViewModel()
         {
             // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer?
-            _musicLoader = musicLoader;
             _fileManager = new FileManager();
             FileName = @"Files/Alle-eendjes-zwemmen-in-het-water.mid";
         }
