@@ -8,9 +8,7 @@ namespace DPA_Musicsheets.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-
         private readonly MusicLoader _musicLoader;
-
         private readonly FileManager _fileManager;
 
         private string _fileName;

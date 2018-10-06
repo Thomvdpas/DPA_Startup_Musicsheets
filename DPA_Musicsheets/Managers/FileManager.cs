@@ -3,16 +3,29 @@ using System.IO;
 using System.Text;
 using DPA_Musicsheets.Adapters;
 using DPA_Musicsheets.Enums;
+using DPA_Musicsheets.MusicLoaders;
 using Microsoft.Win32;
 
 namespace DPA_Musicsheets.Managers
 {
-    public delegate string EventHandler(string result);
-
     public class FileManager
     {
-        public static event EventHandler MidiSequenceEvent;
-        public static event EventHandler LilypondTextLoadedEvent;
+        public AbstractMusicLoader GetMusicLoader()
+        {
+            var musicLoaderFactory = new MusicLoaderFactory();
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = musicLoaderFactory.GetExtensionFilter()
+            };
+
+            if (openFileDialog.ShowDialog() != true) return null;
+            var extension = Path.GetExtension(openFileDialog.FileName);
+            var musicLoader = musicLoaderFactory.GetMusicLoader(extension);
+
+            if (musicLoader == null) return null;
+            musicLoader.FilePath = openFileDialog.FileName;
+            return musicLoader;
+        }
 
         public string OpenFile()
         {

@@ -114,7 +114,6 @@
     <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\PitchType.cs" />
     <Compile Include="Adapters\MidiSequence.cs" />
-    <Compile Include="Factories\FileLoaderFactory.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Managers\FileManager.cs" />
     <Compile Include="Managers\ImprovedMusicLoader.cs" />
@@ -130,6 +129,10 @@
     <Compile Include="Models\Repetition.cs" />
     <Compile Include="Models\RestNote.cs" />
     <Compile Include="Models\Signature.cs" />
+    <Compile Include="MusicLoaders\AbstractMusicLoader.cs" />
+    <Compile Include="MusicLoaders\LilypondMusicLoader.cs" />
+    <Compile Include="MusicLoaders\MidiMusicLoader.cs" />
+    <Compile Include="MusicLoaders\MusicLoaderFactory.cs" />
     <Compile Include="Parser\LilypondToStaff.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
     <Compile Include="ViewModels\StaffsViewModel.cs" />
