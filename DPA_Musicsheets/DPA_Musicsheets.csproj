@@ -110,6 +110,11 @@
     <Compile Include="Builders\AbstractNoteBuilder.cs" />
     <Compile Include="Builders\MusicNoteBuilder.cs" />
     <Compile Include="Builders\RestNoteBuilder.cs" />
+    <Compile Include="Commands\FileCommands\LoadFileCommand.cs" />
+    <Compile Include="Commands\FileCommands\FileHandlingCommand.cs" />
+    <Compile Include="Commands\AbstractCommand.cs" />
+    <Compile Include="Commands\FileCommands\OpenFileCommand.cs" />
+    <Compile Include="Commands\FileCommands\SaveFileCommand.cs" />
     <Compile Include="Enums\FileExtension.cs" />
     <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\PitchType.cs" />
