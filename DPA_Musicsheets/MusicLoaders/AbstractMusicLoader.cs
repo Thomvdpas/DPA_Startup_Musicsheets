@@ -8,6 +8,6 @@ namespace DPA_Musicsheets.MusicLoaders
         public string Extension { get; set; }
         public string Filter => $"{FilterName}|*{Extension}";
         public string FilePath { get; set; }
-        public abstract Piece Load();
+        public abstract MusicPiece Load();
     }
 }

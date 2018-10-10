@@ -1,18 +1,13 @@
 ﻿using DPA_Musicsheets.Enums;
+using DPA_Musicsheets.Models.Base;
 
 namespace DPA_Musicsheets.Models
 {
     public class MusicNote : BaseNote
     {
-
-        public MusicNote(NoteType noteType) : base(noteType)
+        public MusicNote()
         {
-
-        }
-
-        public MusicNote(PitchType pitchType, NoteType noteType, double duration) : base(pitchType, noteType, duration)
-        {
-            
+            PitchType = PitchType.None;
         }
 
         public override BaseNote ShallowClone()
@@ -22,7 +17,7 @@ namespace DPA_Musicsheets.Models
 
         public override BaseNote Clone()
         {
-            return new MusicNote(PitchType, NoteType, Duration);
+            return new MusicNote();
         }
     }
 }

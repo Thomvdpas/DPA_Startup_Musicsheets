@@ -10,7 +10,7 @@ namespace DPA_Musicsheets.MusicLoaders
             throw new System.NotImplementedException();
         }
 
-        public override Piece Load()
+        public override MusicPiece Load()
         {
             throw new System.NotImplementedException();
         }

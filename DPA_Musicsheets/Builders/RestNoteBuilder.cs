@@ -2,11 +2,11 @@
 
 namespace DPA_Musicsheets.Builders
 {
-    public class RestNoteBuilder : AbstractNoteBuilder
+    public class RestNoteBuilder : AbstractBuilder<RestNoteBuilder, RestNote>
     {
         public RestNoteBuilder()
         {
-            BaseNote = new RestNote();
+            Note = new RestNote();
         }
     }
 }

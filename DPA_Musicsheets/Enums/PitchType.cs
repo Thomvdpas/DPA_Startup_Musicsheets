@@ -2,8 +2,8 @@
 {
     public enum PitchType
     {
-        Sharp,
-        Flat,
-        None
+        None = 0,
+        Sharp = 1,
+        Flat = -1
     }
 }

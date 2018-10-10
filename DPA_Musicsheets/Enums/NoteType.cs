@@ -9,6 +9,6 @@
         G,
         A,
         B,
-        Empty
+        Rest
     }
 }

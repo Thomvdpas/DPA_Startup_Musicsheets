@@ -1,4 +1,6 @@
-﻿namespace DPA_Musicsheets.Models
+﻿using DPA_Musicsheets.Models.Base;
+
+namespace DPA_Musicsheets.Models
 {
     public class Repetition
     {

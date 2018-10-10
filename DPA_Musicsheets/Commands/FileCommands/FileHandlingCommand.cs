@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DPA_Musicsheets.MusicLoaders;
 
-namespace DPA_Musicsheets.Command
+namespace DPA_Musicsheets.Commands.FileCommands
 {
     public class FileHandlingCommand : AbstractCommand
     {

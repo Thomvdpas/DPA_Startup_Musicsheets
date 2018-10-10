@@ -5,22 +5,32 @@ using System.Text.RegularExpressions;
 using DPA_Musicsheets.Models;
 using PSAMControlLibrary;
 
-namespace DPA_Musicsheets.Parser
+namespace DPA_Musicsheets.Converters
 {
-    public class LilypondToStaff
+    public class LilypondToStaffConverter : AbstractMusicConverter<List<MusicalSymbol>>
     {
-        private static readonly List<char> Notesorder = new List<char> { 'c', 'd', 'e', 'f', 'g', 'a', 'b' };
+        private static List<Char> notesorder = new List<Char> { 'c', 'd', 'e', 'f', 'g', 'a', 'b' };
+        private List<MusicalSymbol> staffSymbols = new List<MusicalSymbol>();
 
-        public LilypondToStaff()
+        public override List<MusicalSymbol> Convert(Piece piece)
         {
+            //lilypond = lilypond.Trim().ToLower().Replace("\r\n", " ").Replace("\n", " ").Replace("  ", " ");
+            //var tokens = GetTokensFromLilypond(lilypond);
+            //staffSymbols.Clear();
 
+            //staffSymbols.AddRange(GetStaffsFromTokens(tokens));
+            //return staffSymbols;
+            ////this.StaffsViewModel.SetStaffs(this.WPFStaffs);
+
+            return null;
         }
 
+        /// Staffs loading (loads lilypond to WPF staffs)
         private static IEnumerable<MusicalSymbol> GetStaffsFromTokens(LinkedList<LilypondToken> tokens)
         {
             List<MusicalSymbol> symbols = new List<MusicalSymbol>();
 
-            Clef currentClef = null;
+            Clef currentClef;
             int previousOctave = 4;
             char previousNote = 'c';
             bool inRepeat = false;
@@ -89,7 +99,7 @@ namespace DPA_Musicsheets.Parser
                         alter += Regex.Matches(currentToken.Value, "is").Count;
                         alter -= Regex.Matches(currentToken.Value, "es|as").Count;
                         // Octaves
-                        int distanceWithPreviousNote = Notesorder.IndexOf(currentToken.Value[0]) - Notesorder.IndexOf(previousNote);
+                        int distanceWithPreviousNote = notesorder.IndexOf(currentToken.Value[0]) - notesorder.IndexOf(previousNote);
                         if (distanceWithPreviousNote > 3) // Shorter path possible the other way around
                         {
                             distanceWithPreviousNote -= 7; // The number of notes in an octave
@@ -99,11 +109,11 @@ namespace DPA_Musicsheets.Parser
                             distanceWithPreviousNote += 7; // The number of notes in an octave
                         }
 
-                        if (distanceWithPreviousNote + Notesorder.IndexOf(previousNote) >= 7)
+                        if (distanceWithPreviousNote + notesorder.IndexOf(previousNote) >= 7)
                         {
                             previousOctave++;
                         }
-                        else if (distanceWithPreviousNote + Notesorder.IndexOf(previousNote) < 0)
+                        else if (distanceWithPreviousNote + notesorder.IndexOf(previousNote) < 0)
                         {
                             previousOctave--;
                         }
@@ -154,26 +164,6 @@ namespace DPA_Musicsheets.Parser
             return symbols;
         }
 
-        /// <summary>
-        /// This creates WPF staffs and MIDI from Lilypond.
-        /// TODO: Remove the dependencies from one language to another. If we want to replace the WPF library with another for example, we have to rewrite all logic.
-        /// TODO: Create our own domain classes to be independent of external libraries/languages.
-        /// </summary>
-        /// <param name="content"></param>
-        public void LoadLilypondIntoWpfStaffsAndMidi(string content)
-        {
-            LilypondText = content;
-            content = content.Trim().ToLower().Replace("\r\n", " ").Replace("\n", " ").Replace("  ", " ");
-            LinkedList<LilypondToken> tokens = GetTokensFromLilypond(content);
-            WPFStaffs.Clear();
-
-            WPFStaffs.AddRange(GetStaffsFromTokens(tokens));
-            this.StaffsViewModel.SetStaffs(this.WPFStaffs);
-
-            MidiSequence = GetSequenceFromWPFStaffs();
-            MidiPlayerViewModel.MidiSequence = MidiSequence;
-        }
-
         private static LinkedList<LilypondToken> GetTokensFromLilypond(string content)
         {
             var tokens = new LinkedList<LilypondToken>();
@@ -219,6 +209,5 @@ namespace DPA_Musicsheets.Parser
 
             return tokens;
         }
-
     }
 }

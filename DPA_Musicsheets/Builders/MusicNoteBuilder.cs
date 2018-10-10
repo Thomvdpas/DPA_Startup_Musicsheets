@@ -3,23 +3,40 @@ using DPA_Musicsheets.Models;
 
 namespace DPA_Musicsheets.Builders
 {
-    public class MusicNoteBuilder : AbstractNoteBuilder
+    public class NoteBuilder : AbstractBuilder<NoteBuilder, MusicNote>
     {
-
-        public MusicNoteBuilder(NoteType noteType)
+        public NoteBuilder(PitchType pitchType)
         {
-            BaseNote = new MusicNote(noteType);
+            Note = new MusicNote { PitchType = pitchType };
         }
-
         public void Sharp()
         {
-            BaseNote.PitchType = PitchType.Sharp;
+            Note.PitchType = PitchType.Sharp;
         }
 
         public void Flat()
         {
-            BaseNote.PitchType = PitchType.Flat;
+            Note.PitchType = PitchType.Flat;
         }
 
+        public void IncreaseOctave()
+        {
+            Note.Octaves++;
+        }
+
+        public void DecreaseOctave()
+        {
+            Note.Octaves--;
+        }
+
+        public void ChangeOctave(int value)
+        {
+            Note.Octaves += value;
+        }
+
+        public void IsTied(bool isTied = true)
+        {
+            Note.IsTied = isTied;
+        }
     }
 }

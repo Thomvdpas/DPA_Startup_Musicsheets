@@ -1,4 +1,5 @@
 ﻿using DPA_Musicsheets.Enums;
+using DPA_Musicsheets.Models.Base;
 
 namespace DPA_Musicsheets.Models
 {
@@ -6,12 +7,7 @@ namespace DPA_Musicsheets.Models
     {
         public RestNote()
         {
-
-        }
-
-        public RestNote(double duration) : base(PitchType.None, NoteType.Empty, duration)
-        {
-
+            NoteType = NoteType.Rest;
         }
 
         public override BaseNote ShallowClone()
@@ -21,8 +17,7 @@ namespace DPA_Musicsheets.Models
 
         public override BaseNote Clone()
         {
-            return new RestNote(Duration);
+            return new RestNote();
         }
     }
-
 }

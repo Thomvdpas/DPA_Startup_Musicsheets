@@ -1,9 +1,8 @@
-﻿using DPA_Musicsheets.Managers;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Windows.Input;
-using DPA_Musicsheets.Command;
+using DPA_Musicsheets.Commands.FileCommands;
 using DPA_Musicsheets.Models;
 
 namespace DPA_Musicsheets.ViewModels
