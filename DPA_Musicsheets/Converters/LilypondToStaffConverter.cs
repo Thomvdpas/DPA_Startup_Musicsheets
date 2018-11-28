@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DPA_Musicsheets.Models;
+using DPA_Musicsheets.Enums;
 using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.Converters
@@ -37,7 +38,7 @@ namespace DPA_Musicsheets.Converters
             bool inAlternative = false;
             int alternativeRepeatNumber = 0;
 
-            LilypondToken currentToken = tokens.First();
+            var currentToken = tokens.First();
             while (currentToken != null)
             {
                 // TODO: There are a lot of switches based on LilypondTokenKind, can't those be eliminated en delegated?

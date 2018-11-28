@@ -4,7 +4,7 @@
     {
         public int Division { get; set; }
 
-        public MusicPiece(int division)
+        public MusicPiece(int division) : base()
         {
             Division = division;
         }

@@ -11,7 +11,7 @@ namespace DPA_Musicsheets.ViewModels
     {
         private Piece _piece;
 
-        public string FileName => FileHandlingCommand.MusicLoader.FilePath ?? string.Empty;
+        public string FileName => FileHandlingCommand.MusicLoader?.FilePath ?? string.Empty;
             
         /// <summary>
         /// The current state can be used to display some text.

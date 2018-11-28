@@ -52,7 +52,7 @@ namespace DPA_Musicsheets.MusicLoaders.Midi
 
             if (_musicPiece.Signature == null)
             {
-                _musicPiece. = timeSignature;
+                _musicPiece.Signature = timeSignature;
             }
         }
     }

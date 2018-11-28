@@ -8,8 +8,13 @@ namespace DPA_Musicsheets.Models
     public class Piece : ICloneable<Piece>
     {
         public List<Repetition> Repetitions { get; private set; }
-        public Signature Signature { get; private set; }
+        public Signature Signature { get; set; }
         public LinkedList<BaseNote> Notes { get; private set; }
+
+        public Piece()
+        {
+
+        }
 
         public Piece(Signature signature)
         {
@@ -20,7 +25,7 @@ namespace DPA_Musicsheets.Models
 
         public Piece(Signature signature, IList<Repetition> repetitions, LinkedList<BaseNote> notes)
         {
-            Repetitions = (List<Repetition>) repetitions;
+            Repetitions = (List<Repetition>)repetitions;
             Signature = signature;
             Notes = notes;
         }
@@ -37,7 +42,7 @@ namespace DPA_Musicsheets.Models
 
         public Piece ShallowClone()
         {
-            return (Piece) MemberwiseClone();
+            return (Piece)MemberwiseClone();
         }
 
         public Piece Clone()
