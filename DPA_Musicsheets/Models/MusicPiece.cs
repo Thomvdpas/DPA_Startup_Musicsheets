@@ -1,6 +1,6 @@
 ﻿namespace DPA_Musicsheets.Models
 {
-    public class MusicPiece
+    public class MusicPiece : Piece
     {
         public int Division { get; set; }
 

@@ -8,12 +8,12 @@ namespace DPA_Musicsheets.MusicLoaders.Midi
     {
         private readonly List<AbstractMidiHandler> _midiHandlers;
 
-        public MidiHandlerFactory()
+        public MidiHandlerFactory(MidiStrategy midiStrategy)
         {
             _midiHandlers = new List<AbstractMidiHandler>
             {
-                new MidiMetaHandler(),
-                new MidiChannelHandler()
+                new MidiMetaHandler(midiStrategy),
+                new MidiChannelHandler(midiStrategy)
             };
         }
 

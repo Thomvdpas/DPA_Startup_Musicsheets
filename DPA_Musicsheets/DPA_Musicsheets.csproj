@@ -132,7 +132,7 @@
     <Compile Include="Models\Bar.cs" />
     <Compile Include="Models\Composition.cs" />
     <Compile Include="Models\LilypondToken.cs" />
-    <Compile Include="Models\LilypondTokenKind.cs" />
+    <Compile Include="Enums\LilypondTokenKind.cs" />
     <Compile Include="Models\Base\BaseNote.cs" />
     <Compile Include="Models\MusicNote.cs" />
     <Compile Include="Models\MusicPiece.cs" />
@@ -141,12 +141,14 @@
     <Compile Include="Models\RestNote.cs" />
     <Compile Include="Models\Signature.cs" />
     <Compile Include="MusicLoaders\AbstractMusicLoader.cs" />
-    <Compile Include="MusicLoaders\LilypondMusicLoader.cs" />
+    <Compile Include="MusicLoaders\Lilypond\LilypondMusicLoader.cs" />
     <Compile Include="MusicLoaders\Midi\AbstractMidiHandler.cs" />
+    <Compile Include="MusicLoaders\Midi\Marker.cs" />
     <Compile Include="MusicLoaders\Midi\MidiChannelHandler.cs" />
     <Compile Include="MusicLoaders\Midi\MidiHandlerFactory.cs" />
     <Compile Include="MusicLoaders\Midi\MidiMetaHandler.cs" />
     <Compile Include="MusicLoaders\Midi\MidiMusicLoader.cs" />
+    <Compile Include="MusicLoaders\Midi\MidiStrategy.cs" />
     <Compile Include="MusicLoaders\MusicLoaderFactory.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
     <Compile Include="ViewModels\StaffsViewModel.cs" />

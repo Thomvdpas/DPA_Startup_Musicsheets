@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DPA_Musicsheets.Adapters;
 using DPA_Musicsheets.Models;
+using PSAMControlLibrary;
 using Sanford.Multimedia.Midi;
 
 namespace DPA_Musicsheets.MusicLoaders.Midi
@@ -18,8 +20,9 @@ namespace DPA_Musicsheets.MusicLoaders.Midi
             {MetaType.Marker, HandleMarker}
         };
 
-        public MidiMetaHandler()
+        public MidiMetaHandler(MidiStrategy midiStrategy)
         {
+            MidiStrategy = midiStrategy;
             MessageType = MessageType.Meta;
         }
 
@@ -46,7 +49,7 @@ namespace DPA_Musicsheets.MusicLoaders.Midi
             var rest = beatsPerBar % 4;
             beatsPerBar -= rest;
 
-
+            this.MidiStrategy.Change(_currentMidiEvent.AbsoluteTicks, new Signature(beatNote, beatsPerBar));
         }
 
         private void HandleTempo()

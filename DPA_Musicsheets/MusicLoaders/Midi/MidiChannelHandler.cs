@@ -5,8 +5,9 @@ namespace DPA_Musicsheets.MusicLoaders.Midi
 {
     public class MidiChannelHandler : AbstractMidiHandler
     {
-        public MidiChannelHandler()
+        public MidiChannelHandler(MidiStrategy midiStrategy)
         {
+            MidiStrategy = midiStrategy;
             MessageType = MessageType.Channel;
         }
 
